@@ -1,104 +1,507 @@
-/* CSS Variables for Theme Management */
+/* Resident Directory - Light Modern Theme (no external UI frameworks) */
 :root {
-  /* Light theme colors */
-  --bg-primary: #ffffff;
-  --bg-secondary: #f8f9fa;
-  --text-primary: #282c34;
-  --text-secondary: #61dafb;
-  --border-color: #e9ecef;
-  --button-bg: #007bff;
-  --button-text: #ffffff;
+  /* Theme colors from spec */
+  --color-primary: #3b82f6;
+  --color-accent: #06b6d4;
+  --color-text: #111827;
+  --color-bg: #f9fafb;
+  --color-surface: #ffffff;
+  --color-border: rgba(17, 24, 39, 0.12);
+  --color-muted: rgba(17, 24, 39, 0.6);
+
+  --shadow-sm: 0 1px 2px rgba(17, 24, 39, 0.06);
+  --shadow-md: 0 8px 24px rgba(17, 24, 39, 0.12);
+
+  --radius-lg: 16px;
+  --radius-md: 12px;
+  --radius-sm: 10px;
+
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+
+  --header-height: 72px;
 }
 
-[data-theme="dark"] {
-  /* Dark theme colors */
-  --bg-primary: #1a1a1a;
-  --bg-secondary: #282c34;
-  --text-primary: #ffffff;
-  --text-secondary: #61dafb;
-  --border-color: #404040;
-  --button-bg: #0056b3;
-  --button-text: #ffffff;
+* {
+  box-sizing: border-box;
 }
 
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: "Inter", ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial,
+    "Apple Color Emoji", "Segoe UI Emoji";
+  color: var(--color-text);
+  background: var(--color-bg);
+}
+
+a {
+  color: inherit;
+}
+
+button,
+input {
+  font: inherit;
+}
+
+:focus-visible {
+  outline: 3px solid rgba(59, 130, 246, 0.45);
+  outline-offset: 2px;
+}
+
+/* App shell */
 .App {
-  text-align: center;
-  background-color: var(--bg-primary);
-  color: var(--text-primary);
-  min-height: 100vh;
-  transition: background-color 0.3s ease, color 0.3s ease;
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
-.App-logo {
-  height: 40vmin;
+/* Header */
+.Header {
+  height: var(--header-height);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: linear-gradient(
+      90deg,
+      rgba(59, 130, 246, 0.12),
+      rgba(6, 182, 212, 0.08),
+      rgba(249, 250, 251, 1)
+    ),
+    var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.Header-inner {
+  max-width: 1200px;
+  height: 100%;
+  margin: 0 auto;
+  padding: 0 var(--space-4);
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.Brand {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 220px;
+}
+
+.Brand-title {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.Brand-subtitle {
+  margin: 0;
+  font-size: 12px;
+  color: var(--color-muted);
+}
+
+.Search {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.SearchInputWrap {
+  position: relative;
+  flex: 1;
+}
+
+.SearchInput {
+  width: 100%;
+  padding: 12px 40px 12px 40px;
+  border-radius: 999px;
+  border: 1px solid var(--color-border);
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: var(--shadow-sm);
+}
+
+.SearchInput::placeholder {
+  color: rgba(17, 24, 39, 0.45);
+}
+
+.SearchIcon {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: rgba(17, 24, 39, 0.5);
   pointer-events: none;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
+.ClearButton {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  border: 0;
+  background: transparent;
+  color: rgba(17, 24, 39, 0.55);
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 999px;
+}
+
+.ClearButton:hover {
+  background: rgba(17, 24, 39, 0.06);
+}
+
+.Badge {
+  font-size: 12px;
+  font-weight: 600;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: rgba(6, 182, 212, 0.12);
+  color: rgba(17, 24, 39, 0.9);
+  border: 1px solid rgba(6, 182, 212, 0.22);
+}
+
+/* Main layout */
+.Main {
+  flex: 1;
+  width: 100%;
+}
+
+.Container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: var(--space-6) var(--space-4);
+}
+
+.Grid {
+  display: grid;
+  grid-template-columns: 1.25fr 0.75fr;
+  gap: var(--space-6);
+  align-items: start;
+}
+
+@media (max-width: 900px) {
+  .Grid {
+    grid-template-columns: 1fr;
   }
 }
 
-.App-header {
-  background-color: var(--bg-secondary);
-  min-height: 100vh;
+/* Surface cards */
+.Surface {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+}
+
+.SurfaceHeader {
+  padding: var(--space-5) var(--space-5) var(--space-3) var(--space-5);
+  border-bottom: 1px solid rgba(17, 24, 39, 0.08);
+}
+
+.SurfaceTitleRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+}
+
+.SurfaceTitle {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.SurfaceMeta {
+  margin-top: var(--space-2);
+  font-size: 12px;
+  color: var(--color-muted);
+}
+
+.SurfaceBody {
+  padding: var(--space-3);
+}
+
+/* List */
+.List {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: var(--text-primary);
-  transition: background-color 0.3s ease;
-  position: relative;
+  gap: var(--space-2);
 }
 
-.App-link {
-  color: var(--text-secondary);
-  transition: color 0.3s ease;
-}
-
-.theme-toggle {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  background-color: var(--button-bg);
-  color: var(--button-text);
-  border: none;
-  border-radius: 8px;
-  padding: 10px 20px;
-  font-size: 14px;
-  font-weight: 600;
+.RowButton {
+  width: 100%;
+  text-align: left;
+  border: 1px solid transparent;
+  background: transparent;
+  padding: var(--space-3);
+  border-radius: var(--radius-md);
   cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  display: grid;
+  grid-template-columns: 44px 1fr auto;
+  gap: var(--space-3);
+  align-items: center;
 }
 
-.theme-toggle:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-  opacity: 0.9;
+.RowButton:hover {
+  background: rgba(59, 130, 246, 0.06);
+  border-color: rgba(59, 130, 246, 0.12);
 }
 
-.theme-toggle:active {
-  transform: translateY(0);
+.RowButton[aria-selected="true"] {
+  background: rgba(6, 182, 212, 0.10);
+  border-color: rgba(6, 182, 212, 0.25);
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+.Avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 999px;
+  border: 1px solid rgba(17, 24, 39, 0.12);
+  overflow: hidden;
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.18), rgba(6, 182, 212, 0.14));
+  display: grid;
+  place-items: center;
+  font-weight: 700;
+  color: rgba(17, 24, 39, 0.85);
+}
+
+.Avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.RowPrimary {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.RowName {
+  font-size: 14px;
+  font-weight: 700;
+  margin: 0;
+  line-height: 1.2;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.RowSecondary {
+  font-size: 12px;
+  margin: 0;
+  color: var(--color-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.RowRight {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 6px;
+}
+
+.Pill {
+  font-size: 12px;
+  font-weight: 700;
+  border-radius: 999px;
+  padding: 6px 10px;
+  border: 1px solid rgba(17, 24, 39, 0.12);
+  background: rgba(17, 24, 39, 0.03);
+}
+
+.MatchMark {
+  background: rgba(59, 130, 246, 0.18);
+  border-radius: 4px;
+  padding: 0 2px;
+}
+
+/* Pagination */
+.Pagination {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--space-4);
+  padding: var(--space-3);
+  border-top: 1px solid rgba(17, 24, 39, 0.08);
+}
+
+.PaginationMeta {
+  font-size: 12px;
+  color: var(--color-muted);
+}
+
+.Button {
+  border: 1px solid rgba(17, 24, 39, 0.12);
+  background: var(--color-surface);
+  padding: 10px 12px;
+  border-radius: 999px;
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 13px;
+}
+
+.ButtonPrimary {
+  border-color: rgba(59, 130, 246, 0.32);
+  background: rgba(59, 130, 246, 0.10);
+}
+
+.Button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.Button:hover:not(:disabled) {
+  background: rgba(17, 24, 39, 0.04);
+}
+
+.ButtonPrimary:hover:not(:disabled) {
+  background: rgba(59, 130, 246, 0.16);
+}
+
+/* Details panel */
+.Details {
+  position: sticky;
+  top: calc(var(--header-height) + var(--space-6));
+}
+
+@media (max-width: 900px) {
+  .Details {
+    position: static;
   }
-  to {
-    transform: rotate(360deg);
-  }
 }
 
-/* Responsive design for mobile */
-@media (max-width: 768px) {
-  .theme-toggle {
-    top: 10px;
-    right: 10px;
-    padding: 8px 16px;
-    font-size: 12px;
-  }
+.DetailsBody {
+  padding: var(--space-5);
+}
+
+.DetailsTop {
+  display: flex;
+  gap: var(--space-4);
+  align-items: center;
+  margin-bottom: var(--space-4);
+}
+
+.DetailsName {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+.DetailsMeta {
+  margin: 0;
+  color: var(--color-muted);
+  font-size: 13px;
+}
+
+.DetailsGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-3);
+  margin-top: var(--space-4);
+}
+
+.KV {
+  display: grid;
+  grid-template-columns: 110px 1fr;
+  gap: var(--space-3);
+  padding: var(--space-3);
+  border: 1px solid rgba(17, 24, 39, 0.10);
+  border-radius: var(--radius-md);
+  background: rgba(17, 24, 39, 0.02);
+}
+
+.K {
+  font-size: 12px;
+  color: var(--color-muted);
+  font-weight: 700;
+}
+
+.V {
+  font-size: 13px;
+  font-weight: 600;
+  word-break: break-word;
+}
+
+.Link {
+  color: var(--color-primary);
+  text-decoration: none;
+}
+
+.Link:hover {
+  text-decoration: underline;
+}
+
+/* Empty state */
+.EmptyState {
+  padding: var(--space-6);
+  text-align: center;
+}
+
+.EmptyTitle {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.EmptyText {
+  margin: var(--space-2) 0 0 0;
+  font-size: 13px;
+  color: var(--color-muted);
+}
+
+/* Modal for mobile details */
+.ModalOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(17, 24, 39, 0.55);
+  display: grid;
+  place-items: end center;
+  padding: var(--space-4);
+  z-index: 50;
+}
+
+.Modal {
+  width: min(680px, 100%);
+  max-height: 88vh;
+  overflow: auto;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+}
+
+.ModalHeaderRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.IconButton {
+  border: 1px solid rgba(17, 24, 39, 0.14);
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 999px;
+  padding: 10px 12px;
+  cursor: pointer;
+  font-weight: 800;
+}
+
+.IconButton:hover {
+  background: rgba(17, 24, 39, 0.04);
 }
